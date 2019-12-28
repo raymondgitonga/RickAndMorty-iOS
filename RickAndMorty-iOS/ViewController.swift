@@ -7,12 +7,30 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        let url = "https://rickandmortyapi.com/api/character/"
+        
+        
+        Alamofire.request(url, method: .get).responseJSON { (response) in
+            switch response.result{
+            case .success:
+                print(response.result)
+                
+                let result = try? JSON(data: response.data!)
+                print(result)
+                break
+            case .failure:
+                print(response.error!)
+                break
+            }
+        }
     }
 
 
